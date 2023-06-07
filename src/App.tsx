@@ -1,7 +1,7 @@
 import React from 'react';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import {RootNavigator} from './navigation/RootNavigator/RootNavigator';
+import { RootNavigator } from './navigation/RootNavigator/RootNavigator';
 
 function App(): JSX.Element {
   const queryClient = new QueryClient();
