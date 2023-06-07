@@ -1,23 +1,15 @@
 import React from 'react';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
-import {SafeAreaView, ScrollView, StatusBar, StyleSheet} from 'react-native';
+import {RootNavigator} from './navigation/RootNavigator/RootNavigator';
 
 function App(): JSX.Element {
+  const queryClient = new QueryClient();
   return (
-    <SafeAreaView>
-      <StatusBar barStyle={'light-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={styles.container}></ScrollView>
-    </SafeAreaView>
+    <QueryClientProvider client={queryClient}>
+      <RootNavigator />
+    </QueryClientProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-});
 
 export default App;
