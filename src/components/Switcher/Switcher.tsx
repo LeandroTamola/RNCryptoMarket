@@ -12,7 +12,7 @@ import { Text } from '../Text/Text';
 import { useLayout } from '@src/hooks';
 
 interface SwitcherProps {
-  options: { id: number; text: string }[];
+  options: { id: number; label: string }[];
   containerStyle: StyleProp<ViewStyle>;
   onPress: (id: number) => void;
 }
@@ -43,7 +43,7 @@ const Switcher: FC<SwitcherProps> = ({ containerStyle, options, onPress }) => {
     <View style={[styles.container, containerStyle]} onLayout={onLayout}>
       {options.map((option) => (
         <Text key={option.id} onPress={() => onOptionPress(option.id)} style={styles.option}>
-          {option.text}
+          {option.label}
         </Text>
       ))}
       <Animated.View style={[styles.selectionBackground, animatedStyle]} />
