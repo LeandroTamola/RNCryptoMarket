@@ -6,7 +6,11 @@ type HomeViewModelProps = {
 };
 const HomeViewModel = ({ getOrderBookParams }: HomeViewModelProps) => {
   const getOrderBook = useGetOrderBook(getOrderBookParams);
-  return { getOrderBook };
+
+  const onTypePress = (itemId: number) => {
+    console.log(itemId);
+  };
+  return { getOrderBook, onTypePress };
 };
 
 export { HomeViewModel };
