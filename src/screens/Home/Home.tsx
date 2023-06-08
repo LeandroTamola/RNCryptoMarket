@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Card, Counter, FormSelect, Switcher } from '@src/components';
+import { Button, Card, Counter, FormSelect, Switcher } from '@src/components';
 import tailwind from 'twrnc';
 import { Text } from '@src/components/Text/Text';
 import { HomeViewModel } from './HomeViewModel';
@@ -38,19 +38,22 @@ const Home: FC = () => {
           <ActivityIndicator />
         ) : (
           <>
-            <View style={styles.firstSectionContainer}>
-              <Switcher containerStyle={styles.switcher} options={SECTIONS_OPTIONS} onPress={onTypePress} />
-              <FormSelect options={LIMIT_OPTIONS} onSelect={onOrderTypeSelect} />
+            <View>
+              <View style={styles.firstSectionContainer}>
+                <Switcher containerStyle={styles.switcher} options={SECTIONS_OPTIONS} onPress={onTypePress} />
+                <FormSelect options={LIMIT_OPTIONS} onSelect={onOrderTypeSelect} />
+              </View>
+              <OrderBook data={getOrderBook.data!} containerStyle={styles.orderBook} />
+              <View style={styles.formItemContainer}>
+                <Text>Limit Price (USDT)</Text>
+                <Counter />
+              </View>
+              <View style={styles.formItemContainer}>
+                <Text>Amount (SOL)</Text>
+                <Counter />
+              </View>
             </View>
-            <OrderBook data={getOrderBook.data!} containerStyle={styles.orderBook} />
-            <View style={styles.formItemContainer}>
-              <Text>Limit Price (USDT)</Text>
-              <Counter />
-            </View>
-            <View style={styles.formItemContainer}>
-              <Text>Amount (SOL)</Text>
-              <Counter />
-            </View>
+            <Button text="Buy SOL" style={styles.button} />
           </>
         )}
       </Card>
@@ -63,9 +66,10 @@ export { Home };
 const styles = StyleSheet.create({
   container: tailwind`flex-1 bg-black`,
   title: tailwind`text-2xl font-500 pl-4 mb-4`,
-  card: tailwind`px-4 py-6`,
+  card: tailwind`px-4 py-6 justify-between`,
   firstSectionContainer: tailwind`flex-row justify-between z-50`,
   switcher: tailwind`mb-4 w-1/3`,
   orderBook: tailwind``,
   formItemContainer: tailwind`mt-4 flex-row justify-between items-center border-b-zinc-700 border-b-2 pb-4`,
+  button: tailwind`mb-4`,
 });
