@@ -1,26 +1,26 @@
 import React, { FC } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
 import tailwind from 'twrnc';
 import { Card, Text, SvgImage, Button } from '@src/components';
 import { SuccessScreenViewModel } from './SuccessScreenViewModel';
 
 const SuccessScreen: FC = () => {
-  const { animatedContainerStyle, onContinuePress, params } = SuccessScreenViewModel();
+  const { animatedContainerStyle, animatedContentStyle, onContinuePress, params } = SuccessScreenViewModel();
 
   return (
     <Animated.View style={[styles.container, animatedContainerStyle]}>
       <Card style={styles.card}>
-        <View style={styles.bodyContainer}>
-          <View style={styles.checkmarkContainer}>
+        <Animated.View style={[styles.bodyContainer, animatedContentStyle]}>
+          <Animated.View style={[styles.checkmarkContainer, animatedContainerStyle]}>
             <SvgImage name="Checkmark" width={35} height={35} />
-          </View>
+          </Animated.View>
           <Text style={styles.title}>Success</Text>
           <Text style={styles.subtitle}>
             Your {params.type.toLowerCase()} {params.side.toLowerCase()} operation was{'\n'}done successfully!
           </Text>
           <Text style={styles.symbol}>{params.symbol}</Text>
-        </View>
+        </Animated.View>
         <Button text="Continue" onPress={onContinuePress} theme="primary" style={styles.continueButton} />
       </Card>
     </Animated.View>
