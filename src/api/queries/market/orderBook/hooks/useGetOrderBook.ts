@@ -5,7 +5,7 @@ import { OrderBookDto } from '@src/api/models/OrderBook';
 
 export const useGetOrderBook = (params: GetOrderBookParams) => {
   return useQuery<OrderBookDto>({
-    queryKey: [OrderBookKeys.depth, params],
+    queryKey: OrderBookKeys.depth(params),
     queryFn: () => OrderBookServices.getDepth(params),
   });
 };

@@ -4,29 +4,39 @@ import tailwind from 'twrnc';
 import { SymbolSelectionViewModel } from './SymbolSelectionViewModel';
 import { SymbolRowItem } from './components/SymbolRowItem';
 import { SymbolDto } from '@src/api/models/ExchangeInformation';
-import { SearchBar } from '@src/components';
+import { KeyboardAvoidingView, SearchBar } from '@src/components';
 
 const SymbolSelection: FC = () => {
-  const { data, isLoading, symbolName, onChangeSearchInput } = SymbolSelectionViewModel();
+  const { symbols, isLoading, symbolName, onChangeSearchInput, onSymbolPress } = SymbolSelectionViewModel();
 
   const renderItem: ListRenderItem<SymbolDto> = useCallback(
-    ({ item }) => <SymbolRowItem item={item} key={`${item.baseAsset}-${item.quoteAsset}`} />,
+    ({ item }) => <SymbolRowItem item={item} key={`${item.baseAsset}-${item.quoteAsset}`} onPress={onSymbolPress} />,
     [],
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.textInputContainer}>
-        <SearchBar value={symbolName} onChangeText={onChangeSearchInput} placeholder="Search" />
+    <KeyboardAvoidingView>
+      <View style={styles.container}>
+        <View style={styles.textInputContainer}>
+          <SearchBar
+            value={symbolName}
+            onChangeText={onChangeSearchInput}
+            placeholder="Search"
+            autoCapitalize="characters"
+            autoCorrect={false}
+          />
+        </View>
+        <FlatList
+          contentContainerStyle={styles.contentContainerStyle}
+          data={symbols}
+          renderItem={renderItem}
+          refreshing={isLoading}
+          onRefresh={() => <ActivityIndicator />}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        />
       </View>
-      <FlatList
-        contentContainerStyle={styles.contentContainerStyle}
-        data={data?.symbols}
-        renderItem={renderItem}
-        refreshing={isLoading}
-        onRefresh={() => <ActivityIndicator />}
-      />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
