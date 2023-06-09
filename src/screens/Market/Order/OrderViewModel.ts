@@ -1,4 +1,4 @@
-import { NewOrderPostFormValues } from '@src/api/queries/trade/order/useMutateNewOrder';
+import { NewOrderPostFormValues, useMutateNewOrder } from '@src/api/queries/trade/order/useMutateNewOrder';
 import { useFormik } from 'formik';
 import { NewOrderSchema, SIDE_OPTIONS, initialValues } from './constants';
 import { useNavigation } from '@react-navigation/native';
@@ -10,11 +10,24 @@ const OrderViewModel = () => {
   const { symbol } = useOrderContext();
   const navigation = useNavigation<RootNavigatorProps>();
 
-  const { handleChange, values } = useFormik<NewOrderPostFormValues>({
-    initialValues: { ...initialValues, symbol: symbol || '' },
+  const mutateNewOrder = useMutateNewOrder();
+
+  const { handleChange, values, handleSubmit, isSubmitting } = useFormik<NewOrderPostFormValues>({
+    initialValues: { ...initialValues, symbol },
     validationSchema: NewOrderSchema,
     validateOnChange: false,
-    onSubmit: async (values) => await values,
+    onSubmit: async (values) => {
+      const formattedValues = { ...values, symbol };
+      console.log('onSubmit => values', JSON.stringify(formattedValues, null, 2));
+      await mutateNewOrder.mutateAsync(formattedValues, {
+        onSuccess(data) {
+          console.log('SUCCESS DATA', data);
+        },
+        onError(error) {
+          console.error('ERROR', error);
+        },
+      });
+    },
   });
 
   const onSymbolPress = () => {
@@ -54,6 +67,8 @@ const OrderViewModel = () => {
     values,
     submitButtonLabel,
     isBuySide,
+    handleSubmit,
+    isSubmitting,
   };
 };
 

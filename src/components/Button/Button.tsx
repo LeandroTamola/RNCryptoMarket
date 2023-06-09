@@ -20,7 +20,7 @@ const Button: FC<ButtonProps> = ({ text, style, theme = 'primary', isLoading, di
       {...props}
       style={[style, styles.container, themeStyles[theme], disabled && styles.disabled]}
       activeOpacity={0.5}
-      disabled={disabled}>
+      disabled={disabled || isLoading}>
       {svgName && <SvgImage name={svgName} style={styles.svgImage} />}
       {isLoading ? <ActivityIndicator color={'white'} /> : <Text style={styles.text}>{text}</Text>}
     </TouchableOpacity>

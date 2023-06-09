@@ -32,7 +32,7 @@ const SymbolSelection: FC = () => {
           data={symbols}
           renderItem={renderItem}
           refreshing={isLoading}
-          onRefresh={() => <ActivityIndicator />}
+          onRefresh={() => <ActivityIndicator color={tailwind.color('white')} />}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         />
