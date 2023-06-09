@@ -3,7 +3,7 @@ import { UseQueryResult, useQuery, useQueryClient } from '@tanstack/react-query'
 import { OrderBookWebSocketDto } from '@src/api/models/OrderBook';
 import { OrderBookKeys } from '../OrderBookKeys';
 
-const orderBookWebSocket = (symbol: string) => {
+const useOrderBookWebSocket = (symbol: string) => {
   const queryClient = useQueryClient();
   const websocketRef = useRef<WebSocket | null>(null);
 
@@ -54,7 +54,7 @@ const updateOrders = (prevOrders: [string, string][], updatedOrders: [string, st
 };
 
 const useGetOrderBookWebSocket = (symbol: string): UseQueryResult<OrderBookWebSocketDto> => {
-  orderBookWebSocket(symbol);
+  useOrderBookWebSocket(symbol);
   const queryClient = useQueryClient();
   return useQuery(OrderBookKeys.orderBookWebSocket, () => {
     const data = queryClient.getQueryData<OrderBookWebSocketDto>(OrderBookKeys.orderBookWebSocket);
