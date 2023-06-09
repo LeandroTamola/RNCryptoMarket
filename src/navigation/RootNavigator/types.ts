@@ -1,7 +1,8 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export type RootNavigatorParams = {
-  Home: undefined;
+  Order: undefined;
+  SymbolSelection: undefined;
 };
 
 export type RootNavigatorProps = NativeStackNavigationProp<RootNavigatorParams>;
