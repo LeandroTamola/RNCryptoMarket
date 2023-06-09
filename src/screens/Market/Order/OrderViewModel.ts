@@ -4,6 +4,7 @@ import { NewOrderSchema, SIDE_OPTIONS, initialValues } from './constants';
 import { useNavigation } from '@react-navigation/native';
 import { RootNavigatorProps } from '@src/navigation/RootNavigator/types';
 import { useOrderContext } from '@src/context/OrderContext';
+import { StringUtils } from '@src/utils/stringUtils';
 
 const OrderViewModel = () => {
   const { symbol } = useOrderContext();
@@ -30,15 +31,17 @@ const OrderViewModel = () => {
     handleChange('type')(option);
   };
 
-  const onChangeLimitPrice = (amount: number) => {
-    handleChange('price')(String(amount));
+  const onChangeLimitPrice = (amount: string) => {
+    handleChange('price')(amount);
   };
 
-  const onChangeAmount = (amount: number) => {
-    handleChange('quantity')(String(amount));
+  const onChangeAmount = (amount: string) => {
+    handleChange('quantity')(amount);
   };
 
+  const submitButtonLabel = StringUtils.capitalizeFirstLetter(values.side);
   const isSubmitDisabled = !values.side || !Number(values.price) || !Number(values.quantity) || !values.type;
+  const isBuySide = values.side === 'BUY';
 
   return {
     onTypePress,
@@ -49,6 +52,8 @@ const OrderViewModel = () => {
     symbol,
     isSubmitDisabled,
     values,
+    submitButtonLabel,
+    isBuySide,
   };
 };
 

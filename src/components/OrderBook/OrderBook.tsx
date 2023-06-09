@@ -55,8 +55,8 @@ const OrderBook: FC<OrderBookProps> = ({ containerStyle, quantity = 5 }) => {
 export { OrderBook };
 
 const styles = StyleSheet.create({
-  container: tailwind`w-full flex-row py-3 bg-black rounded-xl`,
-  loadingContianer: tailwind`items-center justify-center h-55`,
+  container: tailwind`w-full flex-row py-3 bg-black rounded-xl min-h-55`,
+  loadingContianer: tailwind`items-center justify-center`,
   OrderContainer: tailwind`w-1/2`,
   header: tailwind`flex-row justify-around border-b-2 border-zinc-800 pb-3 mb-1`,
   headerLabel: tailwind`text-zinc-400 text-xs`,
