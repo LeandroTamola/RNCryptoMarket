@@ -4,5 +4,7 @@ export { TextInput } from './TextInput/TextInput';
 export { FormSelect } from './FormSelect/FormSelect';
 export { KeyboardAvoidingView } from './KeyboardAvoidingView/KeyboardAvoidingView';
 export { OrderBook } from './OrderBook/OrderBook';
+export { Text } from './Text/Text';
 export { SearchBar } from './SearchBar/SearchBar';
+export { SvgImage } from './SvgImage/SvgImage';
 export { Switcher } from './Switcher/Switcher';
