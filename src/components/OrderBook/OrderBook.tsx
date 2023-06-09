@@ -1,42 +1,53 @@
 import React, { FC } from 'react';
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { OrderBookDto } from '@src/api/models/OrderBook';
+import { View, StyleSheet, StyleProp, ViewStyle, ActivityIndicator } from 'react-native';
 import tailwind from 'twrnc';
 import { OrderRow } from './OrderRow';
 import { Text } from '../Text/Text';
+import { useGetOrderBookWebSocket } from '@src/api/queries/market/orderBook/hooks/useGetOrderBookSubscription';
+import { useOrderContext } from '@src/context/OrderContext';
 
 interface OrderBookProps {
-  data: OrderBookDto;
   containerStyle?: StyleProp<ViewStyle>;
+  quantity?: number;
 }
 
-type OperationType = { type: 'bids' | 'asks' };
+type OperationType = { type: 'a' | 'b' };
 
-const OrderBook: FC<OrderBookProps> = ({ data, containerStyle }) => {
-  const ListHeaderComponent = () => {
-    return (
-      <View style={styles.header}>
-        <Text style={styles.column}>Price</Text>
-        <Text style={styles.column}>Amount</Text>
-      </View>
-    );
-  };
+const ListHeaderComponent = () => {
+  return (
+    <View style={styles.header}>
+      <Text style={styles.headerLabel}>Price</Text>
+      <Text style={styles.headerLabel}>Amount</Text>
+    </View>
+  );
+};
+
+const OrderBook: FC<OrderBookProps> = ({ containerStyle, quantity = 5 }) => {
+  const { symbol } = useOrderContext();
+  const { data } = useGetOrderBookWebSocket(symbol.toLowerCase());
 
   const OrderBookColumn = ({ type }: OperationType) => {
     return (
       <View style={styles.OrderContainer}>
         <ListHeaderComponent />
-        {data[type].map(([price, amount]) => (
+        {data?.[type]?.slice(0, quantity).map(([price, amount]) => (
           <OrderRow key={`${price}-${amount}`} price={price} amount={amount} type={type} />
         ))}
       </View>
     );
   };
 
+  if (!data)
+    return (
+      <View style={[styles.container, styles.loadingContianer, containerStyle]}>
+        <ActivityIndicator />
+      </View>
+    );
+
   return (
     <View style={[styles.container, containerStyle]}>
-      <OrderBookColumn type="asks" />
-      <OrderBookColumn type="bids" />
+      <OrderBookColumn type="a" />
+      <OrderBookColumn type="b" />
     </View>
   );
 };
@@ -44,8 +55,9 @@ const OrderBook: FC<OrderBookProps> = ({ data, containerStyle }) => {
 export { OrderBook };
 
 const styles = StyleSheet.create({
-  container: tailwind`flex-row py-3 bg-black rounded-xl`,
+  container: tailwind`w-full flex-row py-3 bg-black rounded-xl`,
+  loadingContianer: tailwind`items-center justify-center h-55`,
   OrderContainer: tailwind`w-1/2`,
-  header: tailwind`justify-between flex-row border-b-2 border-zinc-800 pb-3 mb-1`,
-  column: tailwind`w-1/2 text-zinc-400 text-center`,
+  header: tailwind`flex-row justify-around border-b-2 border-zinc-800 pb-3 mb-1`,
+  headerLabel: tailwind`text-zinc-400 text-xs`,
 });

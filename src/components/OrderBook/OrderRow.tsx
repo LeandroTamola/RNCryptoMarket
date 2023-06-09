@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import tailwind from 'twrnc';
 import { Text } from '../Text/Text';
@@ -6,26 +6,26 @@ import { Text } from '../Text/Text';
 interface OrderRowProps {
   price: string;
   amount: string;
-  type: 'bids' | 'asks';
+  type: 'a' | 'b';
 }
-const truncated = (value: number) => Math.floor(value * 100) / 100; // = 5.46
 
 const OrderRow: FC<OrderRowProps> = ({ price, amount, type }) => {
   return (
     <View style={styles.row}>
-      <Text style={styles.column}>{truncated(Number(amount))}</Text>
-      <Text style={[styles.column, type === 'bids' ? styles.bidsPrice : styles.asksPrice]}>
-        {truncated(Number(price))}
+      <Text style={[styles.column, type === 'b' ? styles.bidsPrice : styles.asksPrice]}>
+        {parseFloat(price).toLocaleString(undefined, { minimumFractionDigits: 2 })}
       </Text>
+      <Text style={styles.column}>{parseFloat(amount).toLocaleString(undefined, { minimumFractionDigits: 5 })}</Text>
     </View>
   );
 };
 
-export { OrderRow };
+const MemoizedOrderRow = memo(OrderRow);
+export { MemoizedOrderRow as OrderRow };
 
 const styles = StyleSheet.create({
-  row: tailwind`flex-row py-2`,
-  column: tailwind`w-1/2 text-center`,
+  row: tailwind`flex-row justify-around py-2`,
+  column: tailwind.style(`text-xs`, { fontSize: 10 }),
   bidsPrice: tailwind`text-green-600 font-600`,
   asksPrice: tailwind`text-red-600 font-600`,
 });
