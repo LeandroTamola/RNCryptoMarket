@@ -5,17 +5,18 @@ import tailwind from 'twrnc';
 import { Text } from '../Text/Text';
 import { SvgImage } from '../SvgImage/SvgImage';
 
-type OptionType = { id: string; label: string };
+type OptionType = { id: number; label: string; value: string };
 
 interface FormSelectProps {
+  value: string;
   options: OptionType[];
-  onSelect: (option: OptionType) => void;
+  onSelect: (option: string) => void;
 }
 
-const FormSelect: FC<FormSelectProps> = ({ options, onSelect }) => {
+const FormSelect: FC<FormSelectProps> = ({ value, options, onSelect }) => {
   const [showOptions, setShowOptions] = useState<boolean>(false);
 
-  const onOptionPress = (option: OptionType) => {
+  const onOptionPress = (option: string) => {
     onSelect(option);
     setShowOptions(false);
   };
@@ -30,11 +31,13 @@ const FormSelect: FC<FormSelectProps> = ({ options, onSelect }) => {
     setShowOptions((prev) => !prev);
   };
 
+  const currentLabel = options.find((option) => option.value === value)?.label;
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onSelectPress}>
         <View style={styles.labelContainer}>
-          <Text>{options[0].label}</Text>
+          <Text>{currentLabel}</Text>
           <Animated.View style={[styles.chevron, animatedChevronStyle]}>
             <SvgImage name="ChevronDown" width={16} height={16} />
           </Animated.View>
@@ -42,8 +45,8 @@ const FormSelect: FC<FormSelectProps> = ({ options, onSelect }) => {
       </TouchableOpacity>
       {showOptions && (
         <Animated.View style={styles.optionsContainer}>
-          {options.map(({ id, label }) => (
-            <TouchableOpacity key={id} onPress={() => onOptionPress({ id, label })} style={styles.option}>
+          {options.map(({ id, label, value }) => (
+            <TouchableOpacity key={id} onPress={() => onOptionPress(value)} style={styles.option}>
               <Text>{label}</Text>
             </TouchableOpacity>
           ))}

@@ -1,7 +1,7 @@
 import { useGetOrderBook } from '@src/api/queries/market/orderBook/hooks/useGetOrderBook';
 import { NewOrderPostFormValues } from '@src/api/queries/trade/order/useMutateNewOrder';
 import { useFormik } from 'formik';
-import { NewOrderSchema, initialValues } from './constants';
+import { NewOrderSchema, SIDE_OPTIONS, initialValues } from './constants';
 import { useNavigation } from '@react-navigation/native';
 import { RootNavigatorProps } from '@src/navigation/RootNavigator/types';
 import { useOrderContext } from '@src/context/OrderContext';
@@ -18,21 +18,43 @@ const OrderViewModel = () => {
     onSubmit: async (values) => await values,
   });
 
-  const { handleChange } = formik;
+  const { handleChange, values } = formik;
 
   const onSymbolPress = () => {
     navigation.navigate('SymbolSelection');
   };
 
   const onTypePress = (itemId: number) => {
-    console.log(itemId);
+    const sideValue = SIDE_OPTIONS.find(({ id }) => id === itemId);
+    if (!sideValue) return;
+    handleChange('side')(sideValue.value);
   };
 
-  const onOrderTypeSelect = (option: { id: string; label: string }) => {
-    handleChange('type')(option.id);
-    console.log(option);
+  const onOrderTypeSelect = (option: string) => {
+    handleChange('type')(option);
   };
-  return { getOrderBook, onTypePress, onOrderTypeSelect, formik, onSymbolPress, symbol };
+
+  const onChangeLimitPrice = (amount: number) => {
+    handleChange('price')(String(amount));
+  };
+
+  const onChangeAmount = (amount: number) => {
+    handleChange('quantity')(String(amount));
+  };
+
+  const isSubmitDisabled = !values.side || !Number(values.price) || !Number(values.quantity) || !values.type;
+
+  return {
+    getOrderBook,
+    onTypePress,
+    onOrderTypeSelect,
+    onChangeLimitPrice,
+    onChangeAmount,
+    formik,
+    onSymbolPress,
+    symbol,
+    isSubmitDisabled,
+  };
 };
 
 export { OrderViewModel };
