@@ -1,4 +1,4 @@
-import api from '@src/api/instances/api';
+import Api from '@src/api/instances/api';
 import { AxiosResponse } from 'axios';
 
 import { ExchangeInfoDto } from '@src/api/models/ExchangeInformation';
@@ -8,7 +8,7 @@ const RESOURSES = {
 };
 
 const getExchangeInfo = async (): Promise<ExchangeInfoDto> => {
-  const { data } = await api.get<string, AxiosResponse<ExchangeInfoDto>>(RESOURSES.EXCHANGE_INFO);
+  const { data } = await Api.publicApi.get<string, AxiosResponse<ExchangeInfoDto>>(RESOURSES.EXCHANGE_INFO);
   return data;
 };
 

@@ -1,7 +1,8 @@
 import { OrderType, SideType } from '@src/api/models/Order';
+import { OrderServices } from '@src/api/services/trade/OrderService';
 import { useMutation } from '@tanstack/react-query';
 
-export const useMutateNewOrder = () => useMutation({});
+export const useMutateNewOrder = () => useMutation(OrderServices.newOrder);
 
 export type NewOrderPostBody = {
   symbol: string;
@@ -9,18 +10,10 @@ export type NewOrderPostBody = {
   type: OrderType;
   timeInForce: 'GTC' | 'IOC' | 'FOK';
   quantity: number;
-  //   quoteOrderQty?: number;
   price: number;
-  //   newClientOrderId?: number;
-  //   strategyId?: number;
-  //   strategyType?: number;
-  //   stopPrice?: number; // USED WITH STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT ORDERS
-  //   trailingDelta?: number; // USED WITH STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT ORDERS
-  //   icebergQty?: number;
-  //   newOrderRespType?: 'ACK' | 'RESULT' | 'FULL';
   recvWindow: number;
-  timestamp?: number;
-  signature?: string;
+  timestamp: number;
+  signature: string;
 };
 
-export type NewOrderPostFormValues = Omit<NewOrderPostBody, 'timestamp' | 'signature'>;
+export type NewOrderPostFormValues = Omit<NewOrderPostBody, 'timestamp' | 'signature' | 'timeInForce' | 'recvWindow'>;

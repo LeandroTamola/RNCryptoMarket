@@ -21,6 +21,8 @@ const Order: FC = () => {
     isSubmitDisabled,
     submitButtonLabel,
     isBuySide,
+    handleSubmit,
+    isSubmitting,
   } = OrderViewModel();
 
   return (
@@ -37,17 +39,19 @@ const Order: FC = () => {
               <OrderBook />
               <View style={styles.formItemContainer}>
                 <Text>Limit Price</Text>
-                <TextInput onChangeText={onChangeLimitPrice} keyboardType="number-pad" placeholder="0" />
+                <TextInput onChangeText={onChangeLimitPrice} keyboardType="decimal-pad" placeholder="0" />
               </View>
               <View style={styles.formItemContainer}>
                 <Text>Amount</Text>
-                <TextInput onChangeText={onChangeAmount} keyboardType="number-pad" placeholder="0" />
+                <TextInput onChangeText={onChangeAmount} keyboardType="decimal-pad" placeholder="0" />
               </View>
             </View>
             <Button
               text={submitButtonLabel}
               style={styles.button}
               disabled={isSubmitDisabled}
+              onPress={handleSubmit as () => void}
+              isLoading={isSubmitting}
               theme={isBuySide ? 'primary' : 'secondary'}
             />
           </ScrollView>
