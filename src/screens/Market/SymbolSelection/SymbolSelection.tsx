@@ -11,6 +11,7 @@ const SymbolSelection: FC = () => {
 
   const renderItem: ListRenderItem<SymbolDto> = useCallback(
     ({ item }) => <SymbolRowItem item={item} key={`${item.baseAsset}-${item.quoteAsset}`} onPress={onSymbolPress} />,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 

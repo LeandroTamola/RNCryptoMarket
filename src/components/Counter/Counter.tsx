@@ -1,14 +1,16 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import tailwind from 'twrnc';
 import { Text } from '../Text/Text';
 import { hitSlop } from '@src/utils/hitslop';
 
-interface CounterProps {}
+interface CounterProps {
+  onChange: (amount: number) => void;
+}
 
 type Action = 'increment' | 'decrement';
 
-const Counter: FC<CounterProps> = ({}) => {
+const Counter: FC<CounterProps> = ({ onChange }) => {
   const [amount, setAmount] = useState<number>(0);
 
   const handleAmount = (type: Action) => {
@@ -19,6 +21,10 @@ const Counter: FC<CounterProps> = ({}) => {
       setAmount((prev) => prev - 1);
     }
   };
+
+  useEffect(() => {
+    onChange(amount);
+  }, [amount, onChange]);
 
   return (
     <View style={styles.container}>

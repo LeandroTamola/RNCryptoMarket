@@ -7,10 +7,20 @@ import { Button, Card, Counter, FormSelect, Switcher } from '@src/components';
 import { Text } from '@src/components/Text/Text';
 import { OrderViewModel } from './OrderViewModel';
 import { OrderBook } from '@src/components';
-import { LIMIT_OPTIONS, SECTIONS_OPTIONS } from './constants';
+import { LIMIT_OPTIONS, SIDE_OPTIONS } from './constants';
 
 const Order: FC = () => {
-  const { getOrderBook, onTypePress, onOrderTypeSelect, onSymbolPress, symbol } = OrderViewModel();
+  const {
+    getOrderBook,
+    onTypePress,
+    onOrderTypeSelect,
+    onChangeLimitPrice,
+    onChangeAmount,
+    onSymbolPress,
+    symbol,
+    formik,
+    isSubmitDisabled,
+  } = OrderViewModel();
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <Text style={styles.title} onPress={onSymbolPress}>
@@ -25,20 +35,20 @@ const Order: FC = () => {
           <>
             <View>
               <View style={styles.firstSectionContainer}>
-                <Switcher containerStyle={styles.switcher} options={SECTIONS_OPTIONS} onPress={onTypePress} />
-                <FormSelect options={LIMIT_OPTIONS} onSelect={onOrderTypeSelect} />
+                <Switcher containerStyle={styles.switcher} options={SIDE_OPTIONS} onPress={onTypePress} />
+                <FormSelect value={formik.values.type} options={LIMIT_OPTIONS} onSelect={onOrderTypeSelect} />
               </View>
               <OrderBook data={getOrderBook.data!} />
               <View style={styles.formItemContainer}>
                 <Text>Limit Price</Text>
-                <Counter />
+                <Counter onChange={onChangeLimitPrice} />
               </View>
               <View style={styles.formItemContainer}>
                 <Text>Amount</Text>
-                <Counter />
+                <Counter onChange={onChangeAmount} />
               </View>
             </View>
-            <Button text="Buy SOL" style={styles.button} />
+            <Button text="Buy SOL" style={styles.button} disabled={isSubmitDisabled} />
           </>
         )}
       </Card>
