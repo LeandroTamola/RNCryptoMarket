@@ -22,6 +22,7 @@ const OrderViewModel = () => {
       await mutateNewOrder.mutateAsync(formattedValues, {
         onSuccess(data) {
           console.log('SUCCESS DATA', data);
+          navigation.navigate('Success', formattedValues);
         },
         onError(error) {
           console.error('ERROR', error);
