@@ -6,11 +6,12 @@ import tailwind from 'twrnc';
 
 interface SymbolRowItemProps {
   item: SymbolDto;
+  onPress: (symbol: string) => void;
 }
 
-const SymbolRowItem: FC<SymbolRowItemProps> = ({ item }) => {
+const SymbolRowItem: FC<SymbolRowItemProps> = ({ item, onPress }) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => onPress(item.symbol)}>
       <View style={styles.leftContainer}>
         <Text style={styles.baseAsset}>{item.baseAsset}</Text>
         <Text style={styles.quoteAsset}>/{item.quoteAsset}</Text>

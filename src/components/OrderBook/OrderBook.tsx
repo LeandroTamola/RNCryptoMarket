@@ -7,7 +7,7 @@ import { Text } from '../Text/Text';
 
 interface OrderBookProps {
   data: OrderBookDto;
-  containerStyle: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 type OperationType = { type: 'bids' | 'asks' };

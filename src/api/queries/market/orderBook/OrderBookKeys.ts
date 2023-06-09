@@ -1,3 +1,5 @@
+import { GetOrderBookParams } from './hooks/useGetOrderBook';
+
 export const OrderBookKeys = {
-  depth: ['depth'] as const,
+  depth: (params: GetOrderBookParams) => ['depth', params] as const,
 };
