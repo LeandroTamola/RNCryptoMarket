@@ -1,10 +1,10 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { RootNavigatorProps, RootNavigatorRouteProp } from '@src/navigation/RootNavigator/types';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 import tailwind from 'twrnc';
 
-const green = tailwind.color('green-500') as string;
+const green = tailwind.color('green-400') as string;
 const darkerGreen = tailwind.color('green-600') as string;
 
 const SuccessScreenViewModel = () => {
@@ -12,9 +12,10 @@ const SuccessScreenViewModel = () => {
   const navigation = useNavigation<RootNavigatorProps>();
   const { params } = useRoute<RootNavigatorRouteProp<'Success'>>();
 
-  const toggleAnimation = useCallback(() => {
+  const toggleAnimation = () => {
+    'worklet';
     shouldAnimate.value = true;
-  }, [shouldAnimate]);
+  };
 
   const animatedContainerStyle = useAnimatedStyle(() => {
     return {
@@ -22,9 +23,15 @@ const SuccessScreenViewModel = () => {
     };
   });
 
+  const animatedContentStyle = useAnimatedStyle(() => {
+    return {
+      opacity: withTiming(shouldAnimate.value ? 1 : 0, { duration: 2000 }),
+    };
+  });
+
   useEffect(() => {
     toggleAnimation();
-  }, [toggleAnimation]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onContinuePress = () => {
     navigation.reset({
@@ -35,6 +42,7 @@ const SuccessScreenViewModel = () => {
 
   return {
     animatedContainerStyle,
+    animatedContentStyle,
     onContinuePress,
     params,
   };
