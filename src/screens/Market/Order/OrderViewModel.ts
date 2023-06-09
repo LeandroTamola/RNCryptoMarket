@@ -1,4 +1,3 @@
-import { useGetOrderBook } from '@src/api/queries/market/orderBook/hooks/useGetOrderBook';
 import { NewOrderPostFormValues } from '@src/api/queries/trade/order/useMutateNewOrder';
 import { useFormik } from 'formik';
 import { NewOrderSchema, SIDE_OPTIONS, initialValues } from './constants';
@@ -9,16 +8,13 @@ import { useOrderContext } from '@src/context/OrderContext';
 const OrderViewModel = () => {
   const { symbol } = useOrderContext();
   const navigation = useNavigation<RootNavigatorProps>();
-  const getOrderBook = useGetOrderBook({ limit: 5, symbol });
 
-  const formik = useFormik<NewOrderPostFormValues>({
+  const { handleChange, values } = useFormik<NewOrderPostFormValues>({
     initialValues: { ...initialValues, symbol: symbol || '' },
     validationSchema: NewOrderSchema,
     validateOnChange: false,
     onSubmit: async (values) => await values,
   });
-
-  const { handleChange, values } = formik;
 
   const onSymbolPress = () => {
     navigation.navigate('SymbolSelection');
@@ -45,15 +41,14 @@ const OrderViewModel = () => {
   const isSubmitDisabled = !values.side || !Number(values.price) || !Number(values.quantity) || !values.type;
 
   return {
-    getOrderBook,
     onTypePress,
     onOrderTypeSelect,
     onChangeLimitPrice,
     onChangeAmount,
-    formik,
     onSymbolPress,
     symbol,
     isSubmitDisabled,
+    values,
   };
 };
 

@@ -6,7 +6,7 @@ interface TextProps extends RNTextProps {}
 
 const Text: FC<TextProps> = ({ style, children, ...props }) => {
   return (
-    <RNText style={[styles.container, style]} {...props}>
+    <RNText style={[styles.container, style]} allowFontScaling={false} {...props}>
       {children}
     </RNText>
   );

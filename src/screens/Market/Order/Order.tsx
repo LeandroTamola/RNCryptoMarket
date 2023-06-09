@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import tailwind from 'twrnc';
 
@@ -11,46 +11,38 @@ import { LIMIT_OPTIONS, SIDE_OPTIONS } from './constants';
 
 const Order: FC = () => {
   const {
-    getOrderBook,
     onTypePress,
     onOrderTypeSelect,
     onChangeLimitPrice,
     onChangeAmount,
     onSymbolPress,
     symbol,
-    formik,
+    values,
     isSubmitDisabled,
   } = OrderViewModel();
+
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <Text style={styles.title} onPress={onSymbolPress}>
         {symbol}
       </Text>
       <Card style={styles.card}>
-        {getOrderBook.isLoading && !getOrderBook.data ? (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator />
+        <View>
+          <View style={styles.firstSectionContainer}>
+            <Switcher containerStyle={styles.switcher} options={SIDE_OPTIONS} onPress={onTypePress} />
+            <FormSelect value={values.type} options={LIMIT_OPTIONS} onSelect={onOrderTypeSelect} />
           </View>
-        ) : (
-          <>
-            <View>
-              <View style={styles.firstSectionContainer}>
-                <Switcher containerStyle={styles.switcher} options={SIDE_OPTIONS} onPress={onTypePress} />
-                <FormSelect value={formik.values.type} options={LIMIT_OPTIONS} onSelect={onOrderTypeSelect} />
-              </View>
-              <OrderBook data={getOrderBook.data!} />
-              <View style={styles.formItemContainer}>
-                <Text>Limit Price</Text>
-                <Counter onChange={onChangeLimitPrice} />
-              </View>
-              <View style={styles.formItemContainer}>
-                <Text>Amount</Text>
-                <Counter onChange={onChangeAmount} />
-              </View>
-            </View>
-            <Button text="Buy SOL" style={styles.button} disabled={isSubmitDisabled} />
-          </>
-        )}
+          <OrderBook />
+          <View style={styles.formItemContainer}>
+            <Text>Limit Price</Text>
+            <Counter onChange={onChangeLimitPrice} />
+          </View>
+          <View style={styles.formItemContainer}>
+            <Text>Amount</Text>
+            <Counter onChange={onChangeAmount} />
+          </View>
+        </View>
+        <Button text="Buy SOL" style={styles.button} disabled={isSubmitDisabled} />
       </Card>
     </SafeAreaView>
   );
