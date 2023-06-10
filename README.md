@@ -32,13 +32,21 @@ BINANCE_API_KEY=your-api-key
 BINANCE_SECRET_KEY=your-secret-key
 ```
 
+If after adding the keys in the ENV file the requests still fails.
+
+```
+Open the ios folder
+Open the CryptoMarket.xcworkspace with XCode
+Press Command + Shift + K (in order to clean the cache)
+Run the Project again with the following steps
+```
 
 ### Project Start 📱
 
 _Now you can start the app by using one of this three commands_
 
 ```
-yarn start 
+yarn start --reset-cache
 ```
 ```
 yarn ios 
@@ -64,5 +72,14 @@ yarn android
 
 * **Leandro Támola** 
 
-## Demo
+## MARKET Demo
+| iOS Market | Android Market |
+|---|---|
+|<img src="https://github.com/LeandroTamola/RNCryptoMarket/assets/67109855/7af75dbe-7e0b-4b8f-871a-355e2092f90e" alt="iosMarket" width="400"/>|<img src="https://github.com/LeandroTamola/RNCryptoMarket/assets/67109855/f25f6bab-48a7-4270-a9ad-aa4b6f672a79" alt="androidMarket" width="400"/>|
+
+## Limit Demo
+| iOS Limit | Android Limit |
+|---|---|
+|<img src="https://github.com/LeandroTamola/RNCryptoMarket/assets/67109855/7b53f85d-4803-4cdb-a198-b4efa2f5dcef" alt="simulator" width="400"/>|<img src="https://github.com/LeandroTamola/RNCryptoMarket/assets/67109855/8e0feb58-e6d4-43bd-a35b-81ccca4af600" alt="simulator" width="400"/>|
+
 
