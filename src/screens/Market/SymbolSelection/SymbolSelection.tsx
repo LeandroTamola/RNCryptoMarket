@@ -1,13 +1,15 @@
 import React, { FC, useCallback } from 'react';
-import { ActivityIndicator, FlatList, ListRenderItem, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, FlatList, ListRenderItem, StyleSheet, TouchableOpacity, View } from 'react-native';
 import tailwind from 'twrnc';
 import { SymbolSelectionViewModel } from './SymbolSelectionViewModel';
 import { SymbolRowItem } from './components/SymbolRowItem';
 import { SymbolDto } from '@src/api/models/ExchangeInformation';
-import { KeyboardAvoidingView, SearchBar } from '@src/components';
+import { KeyboardAvoidingView, SearchBar, SvgImage } from '@src/components';
+import { hitSlop } from '@src/utils/hitslop';
 
 const SymbolSelection: FC = () => {
-  const { symbols, isLoading, symbolName, onChangeSearchInput, onSymbolPress } = SymbolSelectionViewModel();
+  const { symbols, isLoading, symbolName, onChangeSearchInput, onSymbolPress, onClosePress } =
+    SymbolSelectionViewModel();
 
   const renderItem: ListRenderItem<SymbolDto> = useCallback(
     ({ item }) => <SymbolRowItem item={item} key={`${item.baseAsset}-${item.quoteAsset}`} onPress={onSymbolPress} />,
@@ -17,6 +19,9 @@ const SymbolSelection: FC = () => {
   return (
     <KeyboardAvoidingView>
       <View style={styles.container}>
+        <TouchableOpacity style={styles.closeButton} onPress={onClosePress} hitSlop={hitSlop.mediumHitSlop}>
+          <SvgImage name="Cross" width={20} height={20} />
+        </TouchableOpacity>
         <View style={styles.textInputContainer}>
           <SearchBar
             value={symbolName}
@@ -44,6 +49,7 @@ export { SymbolSelection };
 
 const styles = StyleSheet.create({
   container: tailwind`bg-zinc-900 flex-1`,
+  closeButton: tailwind`self-end mr-4 mt-4`,
   textInputContainer: tailwind`p-4`,
   contentContainerStyle: tailwind`px-2 py-4`,
 });

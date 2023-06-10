@@ -31,6 +31,6 @@ export { TextInput };
 const styles = StyleSheet.create({
   container: tailwind`bg-black rounded-xl p-4 w-28`,
   amountContainer: tailwind`w-24`,
-  amount: tailwind`text-center text-white text-center font-500`,
+  amount: tailwind`text-center text-white text-center font-500 h-4`,
   operator: tailwind`text-zinc-400`,
 });
