@@ -19,7 +19,9 @@ export type NewOrderPostBody = {
   signature: string;
 };
 
-export type PlaceOrderParams = NewOrderPostFormValues & { handleOrderPlaced: (order: OrderDto) => void };
+export type PlaceOrderParams = NewOrderPostFormValues & {
+  handleOrderPlaced: (order: OrderDto, action: 'add' | 'remove') => void;
+};
 
 export type CancelOrderDeleteParams = {
   symbol: string;

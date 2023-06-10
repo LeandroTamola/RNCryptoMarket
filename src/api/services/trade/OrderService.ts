@@ -36,7 +36,7 @@ const cancelOrder = async (params: CancelOrderDeleteParams) => {
 const placeOrder = async ({ handleOrderPlaced, ...body }: PlaceOrderParams) => {
   const data = await newOrder(body);
   if (body.type === 'MARKET') return data;
-  handleOrderPlaced(data);
+  handleOrderPlaced(data, 'add');
   const { orderId, symbol } = data;
   const orderTimestamp = Date.now();
   const websocket = new WebSocket(WEBSOCKET_BASE_URL);
@@ -64,6 +64,7 @@ const placeOrder = async ({ handleOrderPlaced, ...body }: PlaceOrderParams) => {
         cancelOrder({ orderId, symbol });
         clearInterval(timer);
         websocket.close();
+        handleOrderPlaced(data, 'remove');
         reject(new Error("Order didn't fill in time."));
       }
     }, 1000);
