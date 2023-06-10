@@ -8,13 +8,21 @@ import { OrderBookWebSocketDto } from '@src/api/models/OrderBook';
 export const useMutatePlaceOrder = () => {
   const queryClient = useQueryClient();
 
-  const handleOrderPlaced = (order: OrderDto) => {
+  const handleOrderPlaced = (order: OrderDto, action: 'add' | 'remove') => {
     const orderBookData = queryClient.getQueryData<OrderBookWebSocketDto>(OrderBookKeys.orderBookWebSocket);
     if (!orderBookData) return;
-    if (order.side === 'BUY') {
-      orderBookData.b = [[order.price, order.origQty], ...orderBookData.b];
+    if (action === 'add') {
+      if (order.side === 'BUY') {
+        orderBookData.b = [[order.price, order.origQty], ...orderBookData.b];
+      } else {
+        orderBookData.a = [[order.price, order.origQty], ...orderBookData.a];
+      }
     } else {
-      orderBookData.a = [[order.price, order.origQty], ...orderBookData.a];
+      if (order.side === 'BUY') {
+        orderBookData.b.shift();
+      } else {
+        orderBookData.a.shift();
+      }
     }
     queryClient.setQueryData(OrderBookKeys.orderBookWebSocket, orderBookData);
   };
