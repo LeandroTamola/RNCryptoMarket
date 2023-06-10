@@ -72,14 +72,16 @@ yarn android
 
 * **Leandro Támola** 
 
+
 ## MARKET Demo
 | iOS Market | Android Market |
 |---|---|
-|<img src="https://github.com/LeandroTamola/RNCryptoMarket/assets/67109855/7af75dbe-7e0b-4b8f-871a-355e2092f90e" alt="iosMarket" width="400"/>|<img src="https://github.com/LeandroTamola/RNCryptoMarket/assets/67109855/f25f6bab-48a7-4270-a9ad-aa4b6f672a79" alt="androidMarket" width="400"/>|
+|<img src="https://github.com/LeandroTamola/RNCryptoMarket/assets/67109855/44e73cef-a5db-4b49-b85d-794ecf517c83" alt="iosMarket" width="400"/>|<img src="https://github.com/LeandroTamola/RNCryptoMarket/assets/67109855/431e4d8a-519d-4d15-88d0-ea2607842de6" alt="androidMarket" width="400"/>|
+
 
 ## Limit Demo
 | iOS Limit | Android Limit |
 |---|---|
-|<img src="https://github.com/LeandroTamola/RNCryptoMarket/assets/67109855/7b53f85d-4803-4cdb-a198-b4efa2f5dcef" alt="simulator" width="400"/>|<img src="https://github.com/LeandroTamola/RNCryptoMarket/assets/67109855/8e0feb58-e6d4-43bd-a35b-81ccca4af600" alt="simulator" width="400"/>|
+|<img src="https://github.com/LeandroTamola/RNCryptoMarket/assets/67109855/f092e0f9-3428-48ad-984b-fd0261545007" alt="iOSLimit" width="400"/>|<img src="https://github.com/LeandroTamola/RNCryptoMarket/assets/67109855/1e72e674-015b-463e-95c8-0cd8e64be206" alt="AndroidLimit" width="400"/>|
 
 
