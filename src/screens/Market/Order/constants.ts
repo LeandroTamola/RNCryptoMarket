@@ -22,12 +22,7 @@ export const SIDE_OPTIONS: { id: number; label: string; value: SideType }[] = [
   { id: 1, label: 'SELL', value: 'SELL' },
 ];
 
-export const LIMIT_OPTIONS: { id: number; label: string; value: OrderType }[] = [
+export const LIMIT_OPTIONS: { id: number; label: string; value: Extract<OrderType, 'LIMIT' | 'MARKET'> }[] = [
   { id: 1, label: 'Limit', value: 'LIMIT' },
   { id: 2, label: 'Market', value: 'MARKET' },
-  // { id: 3, label: 'Stop Loss', value: 'STOP_LOSS' },
-  // { id: 4, label: 'Stop Loss Limit', value: 'STOP_LOSS_LIMIT' },
-  // { id: 5, label: 'Take Profit', value: 'TAKE_PROFIT' },
-  // { id: 6, label: 'Take Profit Limit', value: 'TAKE_PROFIT_LIMIT' },
-  // { id: 7, label: 'Limit Maker', value: 'LIMIT_MAKER' },
 ];
