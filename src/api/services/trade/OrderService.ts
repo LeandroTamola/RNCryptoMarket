@@ -33,6 +33,7 @@ const cancelOrder = async (params: CancelOrderDeleteParams) => {
   return data;
 };
 
+const ORDER_PENDING_TIME = 60000;
 const placeOrder = async ({ handleOrderPlaced, ...body }: PlaceOrderParams) => {
   const data = await newOrder(body);
   if (body.type === 'MARKET') return data;
@@ -60,7 +61,7 @@ const placeOrder = async ({ handleOrderPlaced, ...body }: PlaceOrderParams) => {
 
     timer = setInterval(() => {
       const currentTime = Date.now();
-      if (currentTime - orderTimestamp >= 6000) {
+      if (currentTime - orderTimestamp >= ORDER_PENDING_TIME) {
         cancelOrder({ orderId, symbol });
         clearInterval(timer);
         websocket.close();
