@@ -28,7 +28,11 @@ const SymbolSelectionViewModel = () => {
     navigation.canGoBack() && navigation.goBack();
   };
 
-  return { symbols: filteredSymbols, isLoading, symbolName, onChangeSearchInput, onSymbolPress };
+  const onClosePress = () => {
+    navigation.canGoBack() && navigation.goBack();
+  };
+
+  return { symbols: filteredSymbols, isLoading, symbolName, onChangeSearchInput, onSymbolPress, onClosePress };
 };
 
 export { SymbolSelectionViewModel };
