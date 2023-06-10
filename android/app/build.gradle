@@ -8,6 +8,10 @@ import com.android.build.OutputFile
  * By default you don't need to apply any configuration, just uncomment the lines you need.
  */
 
+ project.ext.envConfigFiles = [
+  debug: "../.config/environments/.env",
+]
+
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 react {
