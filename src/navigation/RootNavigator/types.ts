@@ -1,11 +1,11 @@
 import { RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { NewOrderPostFormValues } from '@src/api/queries/trade/order/useMutateNewOrder';
+import { OrderDto } from '@src/api/models/Order';
 
 export type RootNavigatorParams = {
   Order: undefined;
   SymbolSelection: undefined;
-  Success: NewOrderPostFormValues;
+  Success: OrderDto;
 };
 
 export type RootNavigatorProps = NativeStackNavigationProp<RootNavigatorParams>;

@@ -56,5 +56,5 @@ export { Switcher };
 const styles = StyleSheet.create({
   container: tailwind`flex-row bg-black rounded-xl w-full justify-between p-4 relative`,
   option: tailwind`z-50`,
-  selectionBackground: tailwind`absolute h-12 bg-green-200 rounded-xl overflow-hidden`,
+  selectionBackground: tailwind`absolute h-12 bg-green-200 rounded-xl overflow-hidden shadow-md`,
 });
