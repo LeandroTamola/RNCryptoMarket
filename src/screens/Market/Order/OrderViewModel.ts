@@ -1,18 +1,17 @@
-import { useMutatePlaceOrder } from '@src/api/queries/trade/order/hooks/useMutatePlaceOrder';
+import { AxiosError } from 'axios';
 import { useFormik } from 'formik';
+import { useMutatePlaceOrder } from '@src/api/queries/trade/order/hooks/useMutatePlaceOrder';
 import { NewOrderSchema, SIDE_OPTIONS, initialValues } from './constants';
 import { useNavigation } from '@react-navigation/native';
 import { RootNavigatorProps } from '@src/navigation/RootNavigator/types';
 import { useOrderContext } from '@src/context/OrderContext';
 import { StringUtils } from '@src/utils/stringUtils';
 import { NewOrderPostFormValues } from '@src/api/services/trade/types';
-import { useQueryClient } from '@tanstack/react-query';
-import { OrderBookKeys } from '@src/api/queries/market/orderBook/OrderBookKeys';
+import { showErrorAlert } from './utils';
 
 const OrderViewModel = () => {
   const { symbol } = useOrderContext();
   const navigation = useNavigation<RootNavigatorProps>();
-  const queryClient = useQueryClient();
 
   const mutateNewOrder = useMutatePlaceOrder();
 
@@ -25,16 +24,11 @@ const OrderViewModel = () => {
       await mutateNewOrder.mutateAsync(formattedValues, {
         onSuccess(data) {
           if (!data) return;
-          console.log('onSuccess', data);
           navigation.navigate('Success', data);
           return;
         },
         onError(error) {
-          queryClient.invalidateQueries(OrderBookKeys.orderBookWebSocket);
-          console.error('onError', error);
-        },
-        onSettled() {
-          queryClient.invalidateQueries(OrderBookKeys.orderBookWebSocket);
+          showErrorAlert(error as unknown as AxiosError);
         },
       });
     },

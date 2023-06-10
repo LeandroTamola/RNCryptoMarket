@@ -37,10 +37,10 @@ const OrderBook: FC<OrderBookProps> = ({ containerStyle, quantity = 5 }) => {
     );
   };
 
-  if (!data)
+  if (!data?.s)
     return (
       <View style={[styles.container, styles.loadingContianer, containerStyle]}>
-        <ActivityIndicator />
+        <ActivityIndicator color="white" />
       </View>
     );
 

@@ -26,7 +26,7 @@ export { MemoizedSearchBar as SearchBar };
 const styles = StyleSheet.create({
   container: tailwind`flex-row items-center bg-zinc-800 rounded-lg px-3`,
   magnify: tailwind`mr-2`,
-  textInput: tailwind.style(`text-white my-4 pt-0 pb-0`, {
+  textInput: tailwind.style('text-white my-4 pt-0 pb-0', {
     fontSize: 16,
     textAlignVertical: 'top',
   }),

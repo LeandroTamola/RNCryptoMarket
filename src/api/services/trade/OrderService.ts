@@ -48,19 +48,19 @@ const placeOrder = async ({ handleOrderPlaced, ...body }: PlaceOrderParams) => {
   let timer: NodeJS.Timeout;
   const completionPromise = new Promise((resolve, reject) => {
     websocket.onmessage = (event) => {
-      const data = JSON.parse(event.data) as ExecutionReport;
-      if (data.e === 'executionReport' && data.s === symbol && data.i === orderId) {
-        if (data.X === 'FILLED') {
+      const eventData = JSON.parse(event.data) as ExecutionReport;
+      if (eventData.e === 'executionReport' && eventData.s === symbol && eventData.i === orderId) {
+        if (eventData.X === 'FILLED') {
           websocket.close();
           clearInterval(timer);
-          resolve(data);
+          resolve(eventData);
         }
       }
     };
 
     timer = setInterval(() => {
       const currentTime = Date.now();
-      if (currentTime - orderTimestamp >= 60000) {
+      if (currentTime - orderTimestamp >= 6000) {
         cancelOrder({ orderId, symbol });
         clearInterval(timer);
         websocket.close();

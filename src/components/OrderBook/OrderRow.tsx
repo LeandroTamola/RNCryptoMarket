@@ -25,7 +25,7 @@ export { MemoizedOrderRow as OrderRow };
 
 const styles = StyleSheet.create({
   row: tailwind`flex-row justify-around py-2`,
-  column: tailwind.style(`text-xs`, { fontSize: 10 }),
+  column: tailwind.style('text-xs', { fontSize: 10 }),
   bidsPrice: tailwind`text-green-600 font-600`,
   asksPrice: tailwind`text-red-600 font-600`,
 });

@@ -16,7 +16,7 @@ const SymbolRowItem: FC<SymbolRowItemProps> = ({ item, onPress }) => {
         <Text style={styles.baseAsset}>{item.baseAsset}</Text>
         <Text style={styles.quoteAsset}>/{item.quoteAsset}</Text>
       </View>
-      <View style={styles.rightContainer}></View>
+      <View style={styles.rightContainer} />
     </TouchableOpacity>
   );
 };
