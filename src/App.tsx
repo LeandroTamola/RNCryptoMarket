@@ -12,6 +12,7 @@ function App(): JSX.Element {
       },
     },
   });
+
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar barStyle="light-content" />

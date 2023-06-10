@@ -11,18 +11,11 @@ export const useMutatePlaceOrder = () => {
   const handleOrderPlaced = (order: OrderDto, action: 'add' | 'remove') => {
     const orderBookData = queryClient.getQueryData<OrderBookWebSocketDto>(OrderBookKeys.orderBookWebSocket);
     if (!orderBookData) return;
+    const type = order.side === 'BUY' ? 'b' : 'a';
     if (action === 'add') {
-      if (order.side === 'BUY') {
-        orderBookData.b = [[order.price, order.origQty], ...orderBookData.b];
-      } else {
-        orderBookData.a = [[order.price, order.origQty], ...orderBookData.a];
-      }
+      orderBookData[type] = [[order.price, order.origQty], ...orderBookData[type]];
     } else {
-      if (order.side === 'BUY') {
-        orderBookData.b.shift();
-      } else {
-        orderBookData.a.shift();
-      }
+      orderBookData[type].shift();
     }
     queryClient.setQueryData(OrderBookKeys.orderBookWebSocket, orderBookData);
   };
