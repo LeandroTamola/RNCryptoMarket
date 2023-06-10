@@ -7,7 +7,6 @@ import { SuccessScreenViewModel } from './SuccessScreenViewModel';
 
 const SuccessScreen: FC = () => {
   const { animatedContainerStyle, animatedContentStyle, onContinuePress, params } = SuccessScreenViewModel();
-
   return (
     <Animated.View style={[styles.container, animatedContainerStyle]}>
       <Card style={styles.card}>

@@ -23,6 +23,7 @@ const Order: FC = () => {
     isBuySide,
     handleSubmit,
     isSubmitting,
+    showPriceInput,
   } = OrderViewModel();
 
   return (
@@ -37,10 +38,12 @@ const Order: FC = () => {
                 <FormSelect value={values.type} options={LIMIT_OPTIONS} onSelect={onOrderTypeSelect} />
               </View>
               <OrderBook />
-              <View style={styles.formItemContainer}>
-                <Text>Limit Price</Text>
-                <TextInput onChangeText={onChangeLimitPrice} keyboardType="decimal-pad" placeholder="0" />
-              </View>
+              {showPriceInput && (
+                <View style={styles.formItemContainer}>
+                  <Text>Limit Price</Text>
+                  <TextInput onChangeText={onChangeLimitPrice} keyboardType="decimal-pad" placeholder="0" />
+                </View>
+              )}
               <View style={styles.formItemContainer}>
                 <Text>Amount</Text>
                 <TextInput onChangeText={onChangeAmount} keyboardType="decimal-pad" placeholder="0" />

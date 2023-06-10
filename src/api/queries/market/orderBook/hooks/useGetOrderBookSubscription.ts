@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { UseQueryResult, useQuery, useQueryClient } from '@tanstack/react-query';
 import { OrderBookWebSocketDto } from '@src/api/models/OrderBook';
 import { OrderBookKeys } from '../OrderBookKeys';
+import { WEBSOCKET_BASE_URL } from '@src/api/config/config';
 
 const useOrderBookWebSocket = (symbol: string) => {
   const queryClient = useQueryClient();
@@ -9,7 +10,7 @@ const useOrderBookWebSocket = (symbol: string) => {
 
   useEffect(() => {
     const connectWebSocket = () => {
-      const websocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@depth@1000ms`);
+      const websocket = new WebSocket(`${WEBSOCKET_BASE_URL}/${symbol}@depth@1000ms`);
 
       websocket.onopen = () => {
         console.log('connected');

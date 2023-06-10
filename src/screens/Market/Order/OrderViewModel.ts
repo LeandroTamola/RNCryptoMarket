@@ -1,31 +1,40 @@
-import { NewOrderPostFormValues, useMutateNewOrder } from '@src/api/queries/trade/order/useMutateNewOrder';
+import { useMutatePlaceOrder } from '@src/api/queries/trade/order/hooks/useMutatePlaceOrder';
 import { useFormik } from 'formik';
 import { NewOrderSchema, SIDE_OPTIONS, initialValues } from './constants';
 import { useNavigation } from '@react-navigation/native';
 import { RootNavigatorProps } from '@src/navigation/RootNavigator/types';
 import { useOrderContext } from '@src/context/OrderContext';
 import { StringUtils } from '@src/utils/stringUtils';
+import { NewOrderPostFormValues } from '@src/api/services/trade/types';
+import { useQueryClient } from '@tanstack/react-query';
+import { OrderBookKeys } from '@src/api/queries/market/orderBook/OrderBookKeys';
 
 const OrderViewModel = () => {
   const { symbol } = useOrderContext();
   const navigation = useNavigation<RootNavigatorProps>();
+  const queryClient = useQueryClient();
 
-  const mutateNewOrder = useMutateNewOrder();
+  const mutateNewOrder = useMutatePlaceOrder();
 
   const { handleChange, values, handleSubmit, isSubmitting } = useFormik<NewOrderPostFormValues>({
-    initialValues: { ...initialValues, symbol },
+    initialValues: { ...initialValues, symbol } as NewOrderPostFormValues,
     validationSchema: NewOrderSchema,
     validateOnChange: false,
     onSubmit: async (values) => {
       const formattedValues = { ...values, symbol };
-      console.log('onSubmit => values', JSON.stringify(formattedValues, null, 2));
       await mutateNewOrder.mutateAsync(formattedValues, {
         onSuccess(data) {
-          console.log('SUCCESS DATA', data);
-          navigation.navigate('Success', formattedValues);
+          if (!data) return;
+          console.log('onSuccess', data);
+          navigation.navigate('Success', data);
+          return;
         },
         onError(error) {
-          console.error('ERROR', error);
+          queryClient.invalidateQueries(OrderBookKeys.orderBookWebSocket);
+          console.error('onError', error);
+        },
+        onSettled() {
+          queryClient.invalidateQueries(OrderBookKeys.orderBookWebSocket);
         },
       });
     },
@@ -54,7 +63,9 @@ const OrderViewModel = () => {
   };
 
   const submitButtonLabel = StringUtils.capitalizeFirstLetter(values.side);
-  const isSubmitDisabled = !values.side || !Number(values.price) || !Number(values.quantity) || !values.type;
+  const showPriceInput = values.type === 'LIMIT';
+  const isSubmitDisabled =
+    !values.side || !Number(values.quantity) || !values.type || (showPriceInput && !Number(values.price));
   const isBuySide = values.side === 'BUY';
 
   return {
@@ -70,6 +81,7 @@ const OrderViewModel = () => {
     isBuySide,
     handleSubmit,
     isSubmitting,
+    showPriceInput,
   };
 };
 

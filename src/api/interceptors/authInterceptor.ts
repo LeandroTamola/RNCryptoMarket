@@ -10,7 +10,5 @@ export const authInterceptor = async (config: AxiosRequestConfig) => {
 
   config.params = { ...queryString.parse(query), signature };
 
-  console.log('config.params', config.params);
-
   return config;
 };
