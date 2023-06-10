@@ -19,6 +19,7 @@ const SuccessScreen: FC = () => {
             Your {params.type.toLowerCase()} {params.side.toLowerCase()} operation was{'\n'}done successfully!
           </Text>
           <Text style={styles.symbol}>{params.symbol}</Text>
+          <Text style={styles.symbol}>Executed Quantity: {params.executedQty}</Text>
         </Animated.View>
         <Button text="Continue" onPress={onContinuePress} theme="primary" style={styles.continueButton} />
       </Card>
